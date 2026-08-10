@@ -1,9 +1,10 @@
+
 "use client";
 
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 type Order = {
   _id: string;
@@ -15,7 +16,7 @@ type Order = {
   }[];
 };
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("id");
 
@@ -54,8 +55,8 @@ export default function OrderSuccessPage() {
   }, [orderId]);
 
   return (
-    <main className="min-h-screen bg-[#F8F2EA] px-6 py-16">
-      <div className="mx-auto max-w-xl rounded-3xl bg-white p-10 text-center shadow-lg">
+    <main className="min-h-screen bg-white px-6 py-20">
+      <div className="mx-auto max-w-2xl text-center">
 
         <CheckCircle2
           size={90}
@@ -152,3 +153,22 @@ export default function OrderSuccessPage() {
     </main>
   );
 }
+
+export default function OrderSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-white px-6 py-20">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-gray-500">
+              Loading...
+            </p>
+          </div>
+        </main>
+      }
+    >
+      <OrderSuccessContent />
+    </Suspense>
+  );
+}
+
