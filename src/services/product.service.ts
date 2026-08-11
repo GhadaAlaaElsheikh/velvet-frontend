@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:3001";
+const API_URL = "https://velvet-backend-production.up.railway.app";
 
 export async function getProducts() {
   const url = `${API_URL}/products?page=1&limit=100`;
