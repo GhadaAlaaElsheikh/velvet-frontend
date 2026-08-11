@@ -1,4 +1,5 @@
-const API_URL = "https://velvet-backend-production.up.railway.app";
+const API_URL =  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:3001";
 
 export async function getProducts() {
   const url = `${API_URL}/products?page=1&limit=100`;

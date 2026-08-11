@@ -19,7 +19,7 @@ export default function ContactPage() {
     setError("");
 
     try {
-      const res = await fetch("http://127.0.0.1:3001/contacts", {
+      const res = await fetch("https://velvet-backend-production.up.railway.app/contacts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

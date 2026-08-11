@@ -20,14 +20,14 @@ export default function MessagesPage() {
       try {
         const token =
           localStorage.getItem("accessToken");
-
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
         if (!token) {
           console.error("No access token");
           return;
         }
 
         const res = await fetch(
-          "http://localhost:3001/contacts",
+        `${API_URL}/contacts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

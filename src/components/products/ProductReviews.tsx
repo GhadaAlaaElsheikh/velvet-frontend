@@ -19,6 +19,8 @@ type Review = {
     image?: string;
   };
 };
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 
 export default function ProductReviews({ product }: Props) {
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -39,7 +41,7 @@ export default function ProductReviews({ product }: Props) {
         setLoadingReviews(true);
 
         const res = await fetch(
-          `http://localhost:3001/reviews/product/${product._id}`,
+          `${API_URL}/reviews/product/${product._id}`,
         );
 
         const data = await res.json();
@@ -92,7 +94,7 @@ export default function ProductReviews({ product }: Props) {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:3001/reviews",
+        `${API_URL}/reviews`,
         {
           method: "POST",
           headers: {

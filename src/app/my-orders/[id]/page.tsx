@@ -43,8 +43,8 @@ export default function OrderDetailsPage() {
           return;
         }
 
-        const res = await fetch(
-          `http://localhost:3001/orders/${id}`,
+      const res = await fetch(
+  `https://velvet-backend-production.up.railway.app/orders/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

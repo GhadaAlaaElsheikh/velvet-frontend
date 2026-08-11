@@ -21,7 +21,7 @@ export default function LoginForm() {
       setError("");
 
       const res = await fetch(
-        "http://localhost:3001/auth/login",
+  "https://velvet-backend-production.up.railway.app/auth/login",
         {
           method: "POST",
           headers: {
@@ -166,8 +166,8 @@ export default function LoginForm() {
       <button
         type="button"
         onClick={() => {
-          window.location.href =
-            "http://localhost:3001/auth/google";
+        window.location.href =
+  "https://velvet-backend-production.up.railway.app/auth/google";
         }}
         className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 py-3 transition hover:bg-gray-50"
       >

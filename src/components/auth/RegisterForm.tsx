@@ -43,7 +43,7 @@ export default function RegisterForm() {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:3001/auth/register",
+        "https://velvet-backend-production.up.railway.app/auth/register",
         {
           method: "POST",
           headers: {
@@ -207,7 +207,7 @@ export default function RegisterForm() {
   type="button"
   onClick={() => {
     window.location.href =
-      "http://localhost:3001/auth/google";
+  "https://velvet-backend-production.up.railway.app/auth/google";
   }}
   className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 py-3 transition hover:bg-gray-50"
 >

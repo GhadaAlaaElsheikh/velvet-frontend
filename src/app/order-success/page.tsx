@@ -31,9 +31,9 @@ function OrderSuccessContent() {
 
     const getOrder = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:3001/orders/${orderId}`,
-        );
+      const res = await fetch(
+  `https://velvet-backend-production.up.railway.app/orders/${orderId}`,
+);
 
         if (!res.ok) {
           throw new Error("Failed to fetch order");

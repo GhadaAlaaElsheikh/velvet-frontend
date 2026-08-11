@@ -4,7 +4,9 @@ import BackButton from "@/components/ui/BackButton";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:3001";
 type Order = {
   _id: string;
   totalPrice: number;
@@ -59,7 +61,7 @@ export default function AdminOrdersPage() {
       }
 
       const res = await fetch(
-        "http://localhost:3001/orders",
+        `${API_URL}/orders`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -107,7 +109,7 @@ export default function AdminOrdersPage() {
       if (!token) return;
 
       const res = await fetch(
-        "http://localhost:3001/orders",
+        `${API_URL}/orders`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -169,7 +171,7 @@ export default function AdminOrdersPage() {
         );
 
       const res = await fetch(
-        `http://localhost:3001/orders/${orderId}/${status}`,
+        `${API_URL}/orders/${orderId}/${status}`,
         {
           method: "PATCH",
           headers: {

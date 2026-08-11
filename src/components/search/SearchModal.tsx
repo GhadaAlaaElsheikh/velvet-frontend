@@ -25,7 +25,7 @@ type Product = {
     price: number;
   }[];
 };
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function SearchModal() {
   const { open, setOpen } = useSearch();
 
@@ -40,9 +40,10 @@ export default function SearchModal() {
     const getProducts = async () => {
       try {
         setLoading(true);
-
-        const res = await fetch("http://localhost:3001/products");
-
+ 
+const res = await fetch(
+  `${API_URL}/products`
+);
         if (!res.ok) {
           throw new Error("Failed to fetch products");
         }

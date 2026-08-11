@@ -40,7 +40,7 @@ export default function AdminDashboard() {
     const getDashboardData = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
         if (!token) {
           console.error("No access token");
           return;
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
         // =========================
 
         const ordersRes = await fetch(
-          "http://localhost:3001/orders",
+         `${API_URL}/orders`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -80,9 +80,8 @@ export default function AdminDashboard() {
         // GET PRODUCTS
         // =========================
 
-        const productsRes = await fetch(
-          "http://localhost:3001/products",
-        );
+        const productsRes = await fetch
+        (`${API_URL}/products`)
 
         if (!productsRes.ok) {
           throw new Error(
@@ -102,7 +101,7 @@ export default function AdminDashboard() {
         // =========================
 
         const contactsRes = await fetch(
-          "http://localhost:3001/contacts",
+          `${API_URL}/contacts`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
