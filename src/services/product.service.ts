@@ -8,7 +8,8 @@ export async function getProducts() {
 
   try {
     const res = await fetch(url, {
-      cache: "no-store",
+      //cache: "no-store",
+      next: { revalidate: 60 },
     });
 
     console.log("🟢 PRODUCTS STATUS:", res.status);
@@ -49,7 +50,8 @@ export async function getProducts() {
 
 export async function getProductById(id: string) {
   const res = await fetch(`${API_URL}/products/${id}`, {
-    cache: "no-store",
+    //cache: "no-store",
+    next: { revalidate: 60 },
   });
 
   if (!res.ok) {
