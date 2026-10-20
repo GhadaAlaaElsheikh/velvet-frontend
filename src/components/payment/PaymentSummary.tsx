@@ -84,7 +84,7 @@ export default function PaymentSummary() {
       // Send order to backend
       const res = await fetch(
        
-  "https://velvet-backend-production.up.railway.app/orders",
+  "https://velvet-backend-production-efda.up.railway.app/orders",
         {
           method: "POST",
           headers: {

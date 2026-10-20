@@ -32,7 +32,7 @@ function OrderSuccessContent() {
     const getOrder = async () => {
       try {
       const res = await fetch(
-  `https://velvet-backend-production.up.railway.app/orders/${orderId}`,
+  `https://velvet-backend-production-efda.up.railway.app/orders/${orderId}`,
 );
 
         if (!res.ok) {

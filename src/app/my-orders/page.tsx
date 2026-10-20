@@ -37,7 +37,7 @@ export default function MyOrdersPage() {
         }
 
         const res = await fetch(
-        "https://velvet-backend-production.up.railway.app/orders/my-orders",
+        "https://velvet-backend-production-efda.up.railway.app/orders/my-orders",
           {
             headers: {
               Authorization: `Bearer ${token}`,

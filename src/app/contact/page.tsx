@@ -19,7 +19,7 @@ export default function ContactPage() {
     setError("");
 
     try {
-      const res = await fetch("https://velvet-backend-production.up.railway.app/contacts", {
+      const res = await fetch("https://velvet-backend-production-efda.up.railway.app/contacts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
