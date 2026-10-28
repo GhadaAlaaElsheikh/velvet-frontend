@@ -20,16 +20,16 @@ const products: Product[] = data.products;
         <div className="mx-auto max-w-7xl px-6">
         <BackButton/>
           <h1 className="text-5xl font-bold text-velvet-burgundy">
-            Body Oil
+            Perfumes Oil
           </h1>
 
           <p className="mt-3 mb-12 text-gray-600">
-            Discover our luxurious Body Oil collection.
+            Discover our luxurious Perfumes Oil collection.
           </p>
 
           {BodyOil.length === 0 ? (
             <p className="text-center text-gray-500">
-              No Body Oil found.
+              No Perfumes Oil found.
             </p>
           ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
