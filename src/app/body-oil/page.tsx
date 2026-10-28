@@ -10,7 +10,7 @@ const data = await getProducts();
 
 const products: Product[] = data.products;
   const BodyOil = products.filter(
-    (product) => product.category.toLowerCase() === "BodyOil"
+    (product) => product.category.toLowerCase() === "body oil"
   );
 
   return (
