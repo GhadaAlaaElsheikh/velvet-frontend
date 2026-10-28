@@ -33,6 +33,16 @@ export default function Categories() {
             </div>
           </div>
 
+          <div className="col-span-2 flex justify-center">
+            <div className="w-1/2">
+              <CategoryCard
+                title="Body Oil"
+                image="/images/categories/bodyoil.jpeg"
+                href="/body-oil"
+              />
+            </div>
+            </div>
+
         </div>
 
       </div>

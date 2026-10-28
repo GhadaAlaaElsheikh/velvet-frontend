@@ -7,7 +7,7 @@ export default function ShopHeader() {
         </h1>
 
         <p className="mt-4 text-center text-gray-600">
-          Discover our luxury perfume collection.
+          Discover our luxury collection.
         </p>
       </div>
     </section>

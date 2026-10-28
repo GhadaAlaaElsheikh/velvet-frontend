@@ -81,6 +81,17 @@ export default function Footer() {
                   Bukhoor
                 </Link>
               </li>
+
+              
+<li>
+  <Link
+    href="/body-oil"
+    className="transition hover:text-[#F5D7A1]"
+  >
+    Body Oil
+  </Link>
+</li>
+
             </ul>
           </div>
 
