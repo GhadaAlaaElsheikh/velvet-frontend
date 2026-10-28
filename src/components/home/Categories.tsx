@@ -22,28 +22,20 @@ export default function Categories() {
             image="/images/categories/candles.jpeg"
             href="/candles"
           />
+   <CategoryCard
+            title="Bukhoor"
+            image="/images/categories/bukhoor.jpeg"
+            href="/bukhoor"
+          />
 
-          <div className="col-span-2 flex justify-center">
-            <div className="w-1/2">
-              <CategoryCard
-                title="Bukhoor"
-                image="/images/categories/bukhoor.jpeg"
-                href="/bukhoor"
-              />
-            </div>
-          </div>
-
-          <div className="col-span-2 flex justify-center">
-            <div className="w-1/2">
-              <CategoryCard
-                title="Body Oil"
-                image="/images/categories/bodyoil.jpeg"
-                href="/body-oil"
-              />
-            </div>
+          <CategoryCard
+            title="Body Oil"
+            image="/images/categories/bodyoil.jpeg"
+            href="/body-oil"
+          />
             </div>
 
-        </div>
+        
 
       </div>
     </section>
