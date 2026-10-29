@@ -31,7 +31,7 @@ export default function Categories() {
           <CategoryCard
             title="Perfumes Oil"
             image="/images/categories/bodyoil.jpeg"
-            href="/body-oil"
+            href="/perfume-oil"
           />
             </div>
 
