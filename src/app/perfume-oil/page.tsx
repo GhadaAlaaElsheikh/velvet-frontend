@@ -16,11 +16,8 @@ const products: Product[] = data.products;
     category: product.category,
   }))
 );
-
 const PerfumeOil = products.filter(
-  (product) =>
-    typeof product.category === "string" &&
-    product.category.trim().toLowerCase() === "perfume-oil"
+  (product) => product.category.toLowerCase() === "perfumes oil"
 );
 
   return (

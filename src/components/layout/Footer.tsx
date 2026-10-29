@@ -85,7 +85,7 @@ export default function Footer() {
               
 <li>
   <Link
-    href="/perfume-oil"
+    href="/perfumes-oil"
     className="transition hover:text-[#F5D7A1]"
   >
     Perfumes Oil
