@@ -29,7 +29,7 @@ export default function Categories() {
           />
 
           <CategoryCard
-            title="Perfume Oil"
+            title="Perfumes Oil"
             image="/images/categories/bodyoil.jpeg"
             href="/perfumes-oil"
           />
