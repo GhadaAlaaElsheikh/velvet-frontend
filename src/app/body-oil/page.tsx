@@ -9,12 +9,15 @@ export default async function BodyOilPage() {
 const data = await getProducts();
 
 const products: Product[] = data.products;
-   
-const BodyOil = products.filter(
-  (product) =>
-    String(product.category).toLowerCase() ===
-    "6ae220abe97db50f1f0e1799"
+   console.log(
+  products.map((product) => ({
+    name: product.name,
+    category: product.category,
+  }))
 );
+const BodyOil = products.filter(
+    (product) => product.category.toLowerCase() === "body-oil"
+  );
 
   return (
    
