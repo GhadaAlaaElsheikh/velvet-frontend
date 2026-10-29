@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
+import BackButton from './../../components/ui/BackButton';
 
 export default function CartPage() {
   const {
@@ -32,6 +33,7 @@ export default function CartPage() {
   return (
     <main className="min-h-screen bg-velvet-cream px-6 py-12 md:px-10 lg:px-16">
       <div className="mx-auto max-w-6xl">
+      <BackButton/>
         <h1 className="mb-10 text-3xl font-semibold text-velvet-dark md:text-4xl">
           Shopping Cart
         </h1>
