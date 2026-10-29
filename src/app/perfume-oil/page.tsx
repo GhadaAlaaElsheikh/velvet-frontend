@@ -16,9 +16,13 @@ const products: Product[] = data.products;
     category: product.category,
   }))
 );
-const PerfumeOil = products.filter(
-  (product) => product.category.toLowerCase() === "perfumes oil"
-);
+const PerfumeOil = products.filter((product) => {
+  console.log("CHECK CATEGORY:", product.name, product.category);
+
+  return product.category?.trim().toLowerCase() === "perfumes oil";
+});
+
+console.log("PERFUME OIL COUNT:", PerfumeOil.length);
 
   return (
    
