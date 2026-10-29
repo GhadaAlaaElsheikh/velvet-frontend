@@ -16,7 +16,7 @@ const products: Product[] = data.products;
   }))
 );
 const BodyOil = products.filter(
-    (product) => product.category.toLowerCase() === "body-oil"
+    (product) => product.category.toLowerCase() === "perfume-oil"
   );
 
   return (
