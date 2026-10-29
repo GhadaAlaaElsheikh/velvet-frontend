@@ -5,19 +5,23 @@ import { getProducts } from "@/services/product.service";
 import { Product } from "@/types/product";
 import BackButton from "@/components/products/BackButton";
  
-export default async function BodyOilPage() {
+export default async function PerfumeOilPage() {
 const data = await getProducts();
 
 const products: Product[] = data.products;
-   console.log(
+ console.log(
+  "Product categories:",
   products.map((product) => ({
     name: product.name,
     category: product.category,
   }))
 );
-const BodyOil = products.filter(
-    (product) => product.category.toLowerCase() === "perfume-oil"
-  );
+
+const PerfumeOil = products.filter(
+  (product) =>
+    typeof product.category === "string" &&
+    product.category.trim().toLowerCase() === "perfume-oil"
+);
 
   return (
    
@@ -33,13 +37,13 @@ const BodyOil = products.filter(
             Discover our luxurious Perfumes Oil collection.
           </p>
 
-          {BodyOil.length === 0 ? (
+          {PerfumeOil.length === 0 ? (
             <p className="text-center text-gray-500">
               No Perfumes Oil found.
             </p>
           ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              { BodyOil.map((product) => (
+              { PerfumeOil.map((product) => (
                 <ProductCard
                   key={product._id}
                   product={product}

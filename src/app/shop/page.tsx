@@ -3,8 +3,8 @@ import Footer from "@/components/layout/Footer";
 import ProductCard from "@/components/cards/ProductCard";
 import { getProducts } from "@/services/product.service";
 import { Product } from "@/types/product";
-import BackButton from "@/components/products/BackButton";
-
+import BackButton from './../../components/ui/BackButton';
+ 
 type ShopPageProps = {
   searchParams: Promise<{
     category?: string;
