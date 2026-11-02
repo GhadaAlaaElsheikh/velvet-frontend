@@ -36,7 +36,7 @@ export default function Home() {
 
           <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-xl">
             <Image
-              src="/images/november-offer.png"
+              src="/images/offer.jpeg"
               alt="Velvet November Gift Bag Special Offer"
               width={1536}
               height={1024}
