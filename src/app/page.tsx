@@ -13,9 +13,13 @@ export default function Home() {
     <>
       
       {/* November Offers Announcement */}
-      <div className="w-full bg-velvet-burgundy px-4 py-3 text-center text-sm font-medium tracking-wide text-velvet-gold sm:text-base">
-        ✨ November Special Offers — Special Discounts All Month Long! ✨
-      </div>
+    <div className="w-full overflow-hidden bg-velvet-cream py-3">
+  <div className="animate-marquee whitespace-nowrap text-center text-base font-extrabold tracking-wider text-velvet-burgundy sm:text-lg">
+    ✨ November Special Offers — Special Discounts All Month Long! ✨
+    &nbsp;&nbsp;&nbsp;
+    ✨ November Special Offers — Special Discounts All Month Long! ✨
+  </div>
+</div>
 
       <Hero />
       <Intro />
