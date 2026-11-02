@@ -1,7 +1,7 @@
-
 "use client";
 
 import { useCart } from "@/context/CartContext";
+import { calculateCartPricing } from "@/utils/pricing";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -12,13 +12,8 @@ export default function PaymentSummary() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const subtotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
-  const shipping = cart.length > 0 ? 35 : 0;
-  const total = subtotal + shipping;
+  // Calculate offers and final prices
+  const pricing = calculateCartPricing(cart);
 
   const handleOrder = async () => {
     if (loading) return;
@@ -69,13 +64,14 @@ export default function PaymentSummary() {
       }
 
       // Create order data
+      // Backend calculates all prices securely
       const orderData = {
         ...customerData,
 
         items: cart.map((item) => ({
           product: item.product._id,
           quantity: item.quantity,
-          price: item.price,
+          size: item.size,
         })),
       };
 
@@ -83,8 +79,7 @@ export default function PaymentSummary() {
 
       // Send order to backend
       const res = await fetch(
-       
-  "https://velvet-backend-production-efda.up.railway.app/orders",
+        "https://velvet-backend-production-efda.up.railway.app/orders",
         {
           method: "POST",
           headers: {
@@ -134,13 +129,29 @@ export default function PaymentSummary() {
 
       <div className="space-y-4">
         <div className="flex justify-between">
-          <span>Subtotal</span>
-          <span>{subtotal} LE</span>
+          <span>Original Subtotal</span>
+          <span>
+            {pricing.originalSubtotal.toFixed(2)} LE
+          </span>
+        </div>
+
+        <div className="flex justify-between">
+          <span>Your Savings</span>
+          <span className="font-semibold text-green-700">
+            - {pricing.savings.toFixed(2)} LE
+          </span>
+        </div>
+
+        <div className="flex justify-between">
+          <span>Subtotal after discounts</span>
+          <span>
+            {pricing.subtotal.toFixed(2)} LE
+          </span>
         </div>
 
         <div className="flex justify-between">
           <span>Shipping</span>
-          <span>{shipping} LE</span>
+          <span>{pricing.shipping} LE</span>
         </div>
       </div>
 
@@ -150,7 +161,7 @@ export default function PaymentSummary() {
         <span>Total</span>
 
         <span className="text-[#8B1E1E]">
-          {total} LE
+          {pricing.total.toFixed(2)} LE
         </span>
       </div>
 
@@ -170,4 +181,3 @@ export default function PaymentSummary() {
     </div>
   );
 }
-

@@ -22,6 +22,7 @@ shippingPrice?: number;
   description: string;
 
   stock?: number;
+isGiftBag?: boolean;
 
   sizes: {
     name: string;
