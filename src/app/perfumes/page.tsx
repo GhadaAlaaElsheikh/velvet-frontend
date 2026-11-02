@@ -21,9 +21,11 @@ const products: Product[] = data.products;
       product.gender === "unisex"
   );
 
-  const menPerfumes = perfumeProducts.filter(
-    (product) => product.gender === "men"
-  );
+const menPerfumes = perfumeProducts.filter(
+  (product) =>
+    product.gender === "men" ||
+    product.gender === "unisex"
+);
 
   return (
      
