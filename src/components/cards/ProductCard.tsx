@@ -26,13 +26,14 @@ export default function ProductCard({
   } = product;
 
   const [showGiftBag, setShowGiftBag] = useState(false);
-
+ const isGiftBagProduct =
+  isGiftBag || name === "Velvet Gift Bag";
   const image =
     Array.isArray(images) && typeof images[0] === "string"
       ? images[0]
       : null;
 
-  const displayPrice = isGiftBag ? 300 : price;
+  const displayPrice = isGiftBagProduct ? 300 : price;
 
   return (
     <>
@@ -74,7 +75,7 @@ export default function ProductCard({
             {displayPrice} LE
           </p>
 
-          {isGiftBag ? (
+          {isGiftBagProduct ? (
             <div className="mt-5 flex flex-col gap-3">
               <button
                 type="button"
@@ -103,7 +104,7 @@ export default function ProductCard({
       </div>
 
       {/* Gift Bag Modal */}
-      {showGiftBag && isGiftBag && (
+      {showGiftBag && isGiftBagProduct && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           onClick={() => setShowGiftBag(false)}
