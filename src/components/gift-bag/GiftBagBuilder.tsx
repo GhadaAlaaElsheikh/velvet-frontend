@@ -234,8 +234,7 @@ export default function GiftBagBuilder({ products }: Props) {
             !candleId ||
             perfumeIds.some((id) => !id)
           }
-          className="mt-6 w-full rounded-lg bg-velvet-burgundy py-4 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-        >
+        className="mt-6 w-full rounded-lg bg-velvet-burgundy py-4 font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"    >
           Add Gift Bag to Cart
         </button>
       </div>

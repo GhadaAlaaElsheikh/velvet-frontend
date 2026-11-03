@@ -1,10 +1,13 @@
 import { CartItem } from "@/context/CartContext";
 
 export function calculateCartPricing(cart: CartItem[]) {
+   const isGiftBagItem = (item: CartItem) =>
+    item.product.isGiftBag ||
+    item.product.name?.trim().toLowerCase() === "velvet gift bag";
+
   const eligibleUnits = cart.reduce((total, item) => {
-    const category = item.product.category
-      ?.trim()
-      .toLowerCase();
+    const category = item.product.category?.trim().toLowerCase()
+       
 
     const isEligibleCategory = [
       "perfumes",
@@ -27,13 +30,14 @@ export function calculateCartPricing(cart: CartItem[]) {
   let originalSubtotal = 0;
 
   const items = cart.map((item) => {
-    const originalPrice = item.price;
+       const isGiftBag = isGiftBagItem(item);
+      const originalPrice = isGiftBag ? 300 : item.price;
     let finalPrice: number;
 
     originalSubtotal += originalPrice * item.quantity;
 
-    if (item.product.isGiftBag) {
-      finalPrice = 320;
+    if (isGiftBag) {
+      finalPrice = 300;
     } else {
       const category = item.product.category
         ?.trim()
