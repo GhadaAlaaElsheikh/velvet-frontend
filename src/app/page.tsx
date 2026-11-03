@@ -52,8 +52,8 @@ export default function Home() {
       <div className="absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-black/60 to-transparent px-4 pb-6 pt-16 sm:pb-10">
         <Link
           href="/gift-bag"
-          className="inline-flex rounded-full bg-velvet-burgundy px-7 py-3 font-semibold text-white transition hover:bg-velvet-dark sm:px-9 sm:py-4"
-        >
+          className="inline-flex items-center justify-center rounded-full border-2 border-white bg-velvet-gold px-8 py-4 text-base font-bold text-velvet-burgundy shadow-xl transition-all duration-300 hover:scale-105 hover:bg-velvet-burgundy hover:text-white sm:px-10 sm:py-5"
+             >
           Customize Your Gift Bag
         </Link>
       </div>
