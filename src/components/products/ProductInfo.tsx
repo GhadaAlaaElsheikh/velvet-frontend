@@ -1,4 +1,4 @@
-
+ 
 "use client";
 
 import { useState } from "react";
@@ -14,8 +14,10 @@ export default function ProductInfo({ product }: Props) {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
 
+  const availableScents = product.scents || [];
+
   const [selectedScent, setSelectedScent] = useState(
-    product.scents?.[0]?.name || "Vanilla"
+    availableScents[0]?.name || ""
   );
 
   const { addToCart } = useCart();
@@ -29,23 +31,12 @@ export default function ProductInfo({ product }: Props) {
 
   const isGiftBag = product.isGiftBag === true;
 
-  const normalizedName = product.name
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
+  const selectedScentData =
+    availableScents.find((scent) => scent.name === selectedScent) ||
+    availableScents[0];
 
-  const isRoze = normalizedName.includes("روزيه");
-
-  // Get scent data from MongoDB
-  const availableScents = product.scents || [];
-
-  const selectedScentData = availableScents.find(
-    (scent) => scent.name === selectedScent
-  );
-
-  const displayedDescription = isRoze
-    ? selectedScentData?.description || product.description
-    : product.description;
+  const displayedDescription =
+    selectedScentData?.description || product.description;
 
   const originalPrice = selectedSize.price;
 
@@ -59,15 +50,13 @@ export default function ProductInfo({ product }: Props) {
       selectedSize.name,
       selectedSize.price,
       quantity,
-      isRoze && selectedScentData
-        ? selectedScent
-        : undefined
+      selectedScentData?.name
     );
 
     toast.success(`${product.name} added to cart`, {
       description: `${selectedSize.name} • ${quantity} item(s)${
-        isRoze && selectedScentData
-          ? ` • ${selectedScent}`
+        selectedScentData
+          ? ` • ${selectedScentData.name}`
           : ""
       }`,
     });
@@ -75,10 +64,12 @@ export default function ProductInfo({ product }: Props) {
 
   return (
     <div>
+      {/* Product Name */}
       <h1 className="text-5xl font-bold text-[#8B1E1E]">
         {product.name}
       </h1>
 
+      {/* Rating */}
       <div className="mt-4 flex items-center gap-2">
         <span className="text-xl text-yellow-500">
           ★★★★★
@@ -90,8 +81,8 @@ export default function ProductInfo({ product }: Props) {
         {displayedDescription}
       </p>
 
-      {/* Scent Selection - Rozé Only */}
-      {isRoze && availableScents.length > 0 && (
+      {/* Scent Selection */}
+      {availableScents.length > 0 && (
         <div className="mt-8">
           <h3 className="mb-4 text-lg font-semibold">
             Choose Your Scent
@@ -101,6 +92,7 @@ export default function ProductInfo({ product }: Props) {
             {availableScents.map((scent) => (
               <button
                 key={scent.name}
+                type="button"
                 onClick={() => setSelectedScent(scent.name)}
                 className={`rounded-md border px-8 py-3 transition ${
                   selectedScent === scent.name
@@ -125,6 +117,7 @@ export default function ProductInfo({ product }: Props) {
           {product.sizes.map((size) => (
             <button
               key={size.name}
+              type="button"
               onClick={() => setSelectedSize(size)}
               className={`rounded-md border px-6 py-3 transition ${
                 selectedSize.name === size.name
@@ -149,6 +142,7 @@ export default function ProductInfo({ product }: Props) {
             <p className="text-4xl font-bold text-[#8B1E1E]">
               300 LE
             </p>
+
             <p className="mt-2 text-sm text-gray-600">
               Special Gift Bag offer
             </p>
@@ -185,6 +179,7 @@ export default function ProductInfo({ product }: Props) {
 
         <div className="flex w-fit items-center rounded-md border border-gray-300">
           <button
+            type="button"
             onClick={() =>
               quantity > 1 && setQuantity(quantity - 1)
             }
@@ -198,6 +193,7 @@ export default function ProductInfo({ product }: Props) {
           </span>
 
           <button
+            type="button"
             onClick={() => setQuantity(quantity + 1)}
             className="px-5 py-3 text-xl hover:bg-gray-100"
           >
@@ -208,6 +204,7 @@ export default function ProductInfo({ product }: Props) {
 
       {/* Add To Cart */}
       <button
+        type="button"
         onClick={handleAddToCart}
         className="mt-10 w-full rounded-md bg-[#8B1E1E] py-4 text-lg font-semibold text-white transition hover:opacity-90"
       >
