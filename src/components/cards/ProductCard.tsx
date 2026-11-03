@@ -22,7 +22,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   } = product;
 
   const isGiftBagProduct =
-    isGiftBag ||
+    isGiftBag === true ||
     name?.trim().toLowerCase() === "velvet gift bag";
 
   const image =
@@ -34,8 +34,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div className="group overflow-hidden rounded-lg bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+      {/* Product Image */}
       <div className="relative h-[420px] overflow-hidden">
-        {badge && !isGiftBagProduct && (
+        {!isGiftBagProduct && badge && (
           <span className="absolute left-4 top-4 z-10 rounded-full bg-[#8B1E1E] px-3 py-1 text-sm font-medium text-white">
             {badge}
           </span>
@@ -58,19 +59,20 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
+      {/* Product Info */}
       <div className="p-5">
         <h3 className="mb-2 text-xl font-semibold text-[#8B1E1E]">
           {name}
         </h3>
 
-        <p className="mt-2 text-lg font-bold text-[#8B1E1E]">
+        <p className="mt-2 text-lg font-medium">
           {displayPrice} LE
         </p>
 
         {isGiftBagProduct ? (
           <Link
             href="/gift-bag"
-            className="mt-5 block w-full rounded-xl border-2 border-[#8B1E1E] bg-[#F8F2EA] py-3 text-center font-bold text-[#8B1E1E] shadow-md transition hover:bg-[#8B1E1E] hover:text-white"
+            className="mt-5 block w-full rounded-md border-2 border-[#8B1E1E] bg-[#F8F2EA] py-3 text-center font-semibold text-[#8B1E1E] transition hover:bg-[#8B1E1E] hover:text-white"
           >
             Customize Your Gift Bag
           </Link>
