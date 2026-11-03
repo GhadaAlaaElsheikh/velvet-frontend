@@ -17,7 +17,7 @@ export default function OrderSummary() {
     0
   );
 
-  const shipping = cart.length > 0 ? 35 : 0;
+  const shipping = cart.length > 0 ? 40 : 0;
   const total = subtotal + shipping;
 
   const handleContinuePayment = () => {

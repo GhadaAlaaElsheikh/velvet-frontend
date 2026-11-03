@@ -40,6 +40,8 @@ export async function getProducts() {
       reviews: product.reviews || 0,
       burnType: product.burnType || "",
       sizes: product.sizes || [],
+      scents: product.scents || [],
+isGiftBag: product.isGiftBag || false,
     }))
   }
   } catch (error) {
@@ -76,5 +78,7 @@ export async function getProductById(id: string) {
     reviews: product.reviews || 0,
     burnType: product.burnType || "",
     sizes: product.sizes || [],
+    scents: product.scents || [],
+isGiftBag: product.isGiftBag || false,
   };
 }

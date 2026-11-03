@@ -24,47 +24,51 @@ export default function Home() {
       <Hero />
       <Intro />
 
-       <section className="bg-velvet-cream px-4 py-10 sm:py-16">
-        <div className="mx-auto max-w-6xl text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-velvet-burgundy">
-            November Exclusive
-          </p>
+       
+<section className="bg-velvet-cream px-4 py-10 sm:py-16">
+  <div className="mx-auto max-w-6xl text-center">
+    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-velvet-burgundy">
+      November Exclusive
+    </p>
 
-          <h2 className="mb-3 text-3xl font-semibold text-velvet-dark sm:text-5xl">
-            A Gift Made Just for You
-          </h2>
+    <h2 className="mb-3 text-3xl font-semibold text-velvet-dark sm:text-5xl">
+      A Gift Made Just for You
+    </h2>
 
-          <p className="mb-8 text-velvet-dark/70">
-            Discover our special Velvet Gift Bag.
-          </p>
+    <p className="mb-8 text-velvet-dark/70">
+      Discover our special Velvet Gift Bag.
+    </p>
 
-          <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-xl">
-            <Image
-              src="/images/offer.jpeg"
-              alt="Velvet November Gift Bag Special Offer"
-              width={1536}
-              height={1024}
-              className="h-auto w-full"
-              priority
-            />
-          </div>
+    <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-xl">
+      <Image
+        src="/images/offer.jpeg"
+        alt="Velvet Gift Bag"
+        width={1536}
+        height={1024}
+        className="h-auto w-full"
+        priority
+      />
 
-          <p className="mt-7 text-2xl font-semibold text-velvet-burgundy">
-            Velvet Gift Bag — 250 LE
-          </p>
+      <div className="absolute inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-black/60 to-transparent px-4 pb-6 pt-16 sm:pb-10">
+        <Link
+          href="/gift-bag"
+          className="inline-flex rounded-full bg-velvet-burgundy px-7 py-3 font-semibold text-white transition hover:bg-velvet-dark sm:px-9 sm:py-4"
+        >
+          Customize Your Gift Bag
+        </Link>
+      </div>
+    </div>
 
-          <p className="mt-2 text-sm text-velvet-dark/70">
-            Bakhoor, a 25g candle, and 3 perfumes of your choice (10ml each).
-          </p>
+    <p className="mt-7 text-2xl font-semibold text-velvet-burgundy">
+      Velvet Gift Bag — 300 LE
+    </p>
 
-          <Link
-            href="/gift-bag"
-            className="mt-6 inline-flex rounded-full bg-velvet-burgundy px-9 py-4 font-semibold text-white transition hover:bg-velvet-dark"
-          >
-            Discover the Gift Bag
-          </Link>
-        </div>
-      </section>
+    <p className="mt-2 text-sm text-velvet-dark/70">
+      1 Bakhoor, 1 Candle, and 3 Perfumes of your choice (10ml each).
+    </p>
+  </div>
+</section>
+
 
 
       <Categories />

@@ -33,7 +33,7 @@ export function calculateCartPricing(cart: CartItem[]) {
     originalSubtotal += originalPrice * item.quantity;
 
     if (item.product.isGiftBag) {
-      finalPrice = 300;
+      finalPrice = 320;
     } else {
       const category = item.product.category
         ?.trim()
