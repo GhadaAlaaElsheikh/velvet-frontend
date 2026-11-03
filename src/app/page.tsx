@@ -50,7 +50,7 @@ export default function Home() {
           </div>
 
           <p className="mt-7 text-2xl font-semibold text-velvet-burgundy">
-            Velvet Gift Bag — 300 LE
+            Velvet Gift Bag — 250 LE
           </p>
 
           <p className="mt-2 text-sm text-velvet-dark/70">

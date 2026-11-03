@@ -13,6 +13,7 @@ export type CartItem = {
   size: string;
   quantity: number;
   price: number;
+   scent?: string;
 };
 
 type CartContextType = {
@@ -22,7 +23,8 @@ type CartContextType = {
     product: Product,
     size: string,
     price: number,
-    quantity: number
+    quantity: number,
+     scent?: string
   ) => void;
 
   removeFromCart: (index: number) => void;
@@ -47,19 +49,24 @@ const addToCart = (
   product: Product,
   size: string,
   price: number,
-  quantity: number
+  quantity: number,
+   scent?: string
 ) => {
   setCart((prev) => {
   const existingItem = prev.find(
   (item) =>
     item.product._id === product._id &&
     item.size === size
+    &&
+          item.scent === scent
 );
 
     if (existingItem) {
     return prev.map((item) =>
   item.product._id === product._id &&
   item.size === size
+  &&
+          item.scent === scent
     ? {
         ...item,
         quantity: item.quantity + quantity,
@@ -76,6 +83,7 @@ const addToCart = (
         size,
         quantity,
         price,
+        scent,
       },
     ];
   });

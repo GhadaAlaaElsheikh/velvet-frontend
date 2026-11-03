@@ -72,6 +72,7 @@ export default function PaymentSummary() {
           product: item.product._id,
           quantity: item.quantity,
           size: item.size,
+            ...(item.scent && { scent: item.scent }),
         })),
       };
 

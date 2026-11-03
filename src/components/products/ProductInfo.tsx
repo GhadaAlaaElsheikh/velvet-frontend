@@ -12,7 +12,7 @@ type Props = {
 export default function ProductInfo({ product }: Props) {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
-
+  const [selectedScent, setSelectedScent] = useState("Vanilla");
   const { addToCart } = useCart();
 
   const category = product.category?.trim().toLowerCase();
@@ -23,6 +23,20 @@ export default function ProductInfo({ product }: Props) {
     !product.isGiftBag;
 
   const isGiftBag = product.isGiftBag === true;
+ 
+  const normalizedName = product.name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+  const isRoze = normalizedName.includes("roze");
+ const scentDescriptions: Record<string, string> = {
+    Rose:
+      "بخور فاخر يجمع بين عبق الورد الطائفي الأصيل ومزيج مختار من الزيوت العطرية الفاخرة، يضم المسك، والعود البوكيه، والعنبر، وزيت الورد، والياسمين. ليمنحك تجربة عطرية دافئة وأنيقة، تدوم طويلًا وتملأ المكان بأجواء من الفخامة والرقي.",
+
+    Vanilla:
+      "بخور فاخر يجمع بين عبق الورد الطائفي الأصيل ومزيج غني من الفانيلا والمسك والكراميل، ليمنحك رائحة دافئة وكريمية بلمسة حلوة وناعمة، تدوم طويلًا وتملأ المكان بأجواء من الرقي والدفء.",
+  };
 
   const originalPrice = selectedSize.price;
 
@@ -35,11 +49,13 @@ export default function ProductInfo({ product }: Props) {
       product,
       selectedSize.name,
       selectedSize.price,
-      quantity
+      quantity,
+      isRoze ? selectedScent : undefined
     );
 
     toast.success(`${product.name} added to cart`, {
-      description: `${selectedSize.name} • ${quantity} item(s)`,
+      description: `${selectedSize.name} • ${quantity} item(s)${
+        isRoze ? ` • ${selectedScent}` : ""}`,
     });
   };
 
@@ -54,10 +70,37 @@ export default function ProductInfo({ product }: Props) {
           ★★★★★
         </span>
       </div>
-
-      <p className="mt-8 leading-8 text-gray-600">
-        {product.description}
+ <p className="mt-8 leading-8 text-gray-600">
+        {isRoze
+          ? scentDescriptions[selectedScent]
+          : product.description}
       </p>
+
+      {/* Scent Selection - Rozé Only */}
+      {isRoze && (
+        <div className="mt-8">
+          <h3 className="mb-4 text-lg font-semibold">
+            Choose Your Scent
+          </h3>
+
+          <div className="flex flex-wrap gap-4">
+            {["Vanilla", "Rose"].map((scent) => (
+              <button
+                key={scent}
+                onClick={() => setSelectedScent(scent)}
+                className={`rounded-md border px-8 py-3 transition ${
+                  selectedScent === scent
+                    ? "border-[#8B1E1E] bg-[#8B1E1E] text-white"
+                    : "border-[#8B1E1E] text-[#8B1E1E] hover:bg-[#8B1E1E] hover:text-white"
+                }`}
+              >
+                {scent}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
 
       {/* Sizes */}
       <div className="mt-10">

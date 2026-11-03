@@ -17,14 +17,25 @@ export default async function ShopPage({
   const { category } = await searchParams;
 
   const data = await getProducts();
-
+/*
   const products: Product[] = data?.products ?? [];
 const filteredProducts = category
   ? products.filter(
       (product: Product) => product.category === category
     )
   : products;
+*/
+const products: Product[] = data?.products ?? [];
 
+const availableProducts = products.filter(
+  (product: Product) => !product.isGiftBag
+);
+
+const filteredProducts = category
+  ? availableProducts.filter(
+      (product: Product) => product.category === category
+    )
+  : availableProducts;
   return (
     <>
       <Navbar />

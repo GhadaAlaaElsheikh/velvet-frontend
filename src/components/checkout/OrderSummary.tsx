@@ -110,9 +110,15 @@ export default function OrderSummary() {
                     {item.product.name}
                   </h3>
 
-                  <p className="text-sm text-gray-500">
-                    {item.size} × {item.quantity}
-                  </p>
+                  {item.scent && (
+  <p className="mt-1 text-sm font-medium text-[#8B1E1E]">
+    Scent: {item.scent}
+  </p>
+)}
+
+<p className="text-sm text-gray-500">
+  {item.size} × {item.quantity}
+</p>
                 </div>
 
                 <span className="font-semibold">

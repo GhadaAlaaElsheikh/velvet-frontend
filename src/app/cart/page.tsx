@@ -23,7 +23,7 @@ export default function CartPage() {
     removeFromCart(index);
 
     toast.error(`${item.product.name} removed from cart`, {
-      description: item.size,
+      description:`${item.size}${item.scent ? ` • ${item.scent}` : ""}`,
     });
   };
 
@@ -64,7 +64,7 @@ export default function CartPage() {
 
                 return (
                   <div
-                    key={`${item.product._id}-${item.size}`}
+                    key={`${item.product._id}-${item.size}-${item.scent || "default"}`}
                     className="flex flex-col gap-5 rounded-xl bg-white p-5 shadow-sm sm:flex-row sm:items-center"
                   >
                     {/* Product Image */}
@@ -85,6 +85,11 @@ export default function CartPage() {
                         {item.product.name}
                       </h2>
 
+{item.scent && (
+  <p className="mt-2 text-sm font-medium text-[#8B1E1E]">
+    Scent: {item.scent}
+  </p>
+)}
                       <p className="mt-2 text-gray-600">
                         Size: {item.size}
                       </p>
