@@ -72,7 +72,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {isGiftBagProduct ? (
           <Link
             href="/gift-bag"
-            className="mt-5 block w-full rounded-md border-2 border-[#8B1E1E] bg-[#F8F2EA] py-3 text-center font-semibold text-[#8B1E1E] transition hover:bg-[#8B1E1E] hover:text-white"
+          className="mt-5 inline-flex rounded-md border-2 border-[#8B1E1E] bg-[#F8F2EA] px-6 py-3 text-left font-semibold text-[#8B1E1E] transition hover:bg-[#8B1E1E] hover:text-white"
           >
             Customize Your Gift Bag
           </Link>
