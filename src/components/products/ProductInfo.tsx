@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Product } from "@/types/product";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type Props = {
   product: Product;
@@ -21,7 +22,7 @@ export default function ProductInfo({ product }: Props) {
   );
 
   const { addToCart } = useCart();
-
+  const router = useRouter();
   const category = product.category?.trim().toLowerCase();
 
   const isBundleEligible =
@@ -29,7 +30,9 @@ export default function ProductInfo({ product }: Props) {
     selectedSize.name.replace(/\s/g, "").toLowerCase() === "60ml" &&
     !product.isGiftBag;
 
-  const isGiftBag = product.isGiftBag === true;
+const isGiftBag =
+  product.isGiftBag === true ||
+  product.name?.trim().toLowerCase() === "velvet gift bag";
 
   const selectedScentData =
     availableScents.find((scent) => scent.name === selectedScent) ||
@@ -45,6 +48,10 @@ export default function ProductInfo({ product }: Props) {
     : Number((originalPrice * 0.8).toFixed(2));
 
   const handleAddToCart = () => {
+    if (isGiftBag) {
+        router.push("/gift-bag");
+    return;
+    }
     addToCart(
       product,
       selectedSize.name,
@@ -203,13 +210,19 @@ export default function ProductInfo({ product }: Props) {
       </div>
 
       {/* Add To Cart */}
+     
       <button
-        type="button"
-        onClick={handleAddToCart}
-        className="mt-10 w-full rounded-md bg-[#8B1E1E] py-4 text-lg font-semibold text-white transition hover:opacity-90"
-      >
-        Add To Cart
-      </button>
+  type="button"
+  onClick={handleAddToCart}
+  className={`mt-10 w-full rounded-xl border-2 py-4 text-lg font-bold shadow-md transition-all duration-300 hover:scale-[1.02] ${
+    isGiftBag
+      ? "border-[#D8B46A] bg-[#F8F2EA] text-[#8B1E1E] hover:bg-[#D8B46A]"
+      : "border-[#8B1E1E] bg-[#8B1E1E] text-white hover:bg-[#6F1717]"
+  }`}
+>
+  {isGiftBag ? "Customize Your Gift Bag" : "Add To Cart"}
+</button>
+
     </div>
   );
 }
