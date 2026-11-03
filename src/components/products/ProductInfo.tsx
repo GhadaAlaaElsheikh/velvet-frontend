@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -12,7 +13,11 @@ type Props = {
 export default function ProductInfo({ product }: Props) {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
-  const [selectedScent, setSelectedScent] = useState("Vanilla");
+
+  const [selectedScent, setSelectedScent] = useState(
+    product.scents?.[0]?.name || "Vanilla"
+  );
+
   const { addToCart } = useCart();
 
   const category = product.category?.trim().toLowerCase();
@@ -23,20 +28,24 @@ export default function ProductInfo({ product }: Props) {
     !product.isGiftBag;
 
   const isGiftBag = product.isGiftBag === true;
- 
+
   const normalizedName = product.name
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 
-  const isRoze = normalizedName.includes("roze");
- const scentDescriptions: Record<string, string> = {
-    Rose:
-      "بخور فاخر يجمع بين عبق الورد الطائفي الأصيل ومزيج مختار من الزيوت العطرية الفاخرة، يضم المسك، والعود البوكيه، والعنبر، وزيت الورد، والياسمين. ليمنحك تجربة عطرية دافئة وأنيقة، تدوم طويلًا وتملأ المكان بأجواء من الفخامة والرقي.",
+  const isRoze = normalizedName.includes("روزيه");
 
-    Vanilla:
-      "بخور فاخر يجمع بين عبق الورد الطائفي الأصيل ومزيج غني من الفانيلا والمسك والكراميل، ليمنحك رائحة دافئة وكريمية بلمسة حلوة وناعمة، تدوم طويلًا وتملأ المكان بأجواء من الرقي والدفء.",
-  };
+  // Get scent data from MongoDB
+  const availableScents = product.scents || [];
+
+  const selectedScentData = availableScents.find(
+    (scent) => scent.name === selectedScent
+  );
+
+  const displayedDescription = isRoze
+    ? selectedScentData?.description || product.description
+    : product.description;
 
   const originalPrice = selectedSize.price;
 
@@ -50,12 +59,17 @@ export default function ProductInfo({ product }: Props) {
       selectedSize.name,
       selectedSize.price,
       quantity,
-      isRoze ? selectedScent : undefined
+      isRoze && selectedScentData
+        ? selectedScent
+        : undefined
     );
 
     toast.success(`${product.name} added to cart`, {
       description: `${selectedSize.name} • ${quantity} item(s)${
-        isRoze ? ` • ${selectedScent}` : ""}`,
+        isRoze && selectedScentData
+          ? ` • ${selectedScent}`
+          : ""
+      }`,
     });
   };
 
@@ -70,37 +84,36 @@ export default function ProductInfo({ product }: Props) {
           ★★★★★
         </span>
       </div>
- <p className="mt-8 leading-8 text-gray-600">
-        {isRoze
-          ? scentDescriptions[selectedScent]
-          : product.description}
+
+      {/* Product Description */}
+      <p className="mt-8 leading-8 text-gray-600">
+        {displayedDescription}
       </p>
 
       {/* Scent Selection - Rozé Only */}
-      {isRoze && (
+      {isRoze && availableScents.length > 0 && (
         <div className="mt-8">
           <h3 className="mb-4 text-lg font-semibold">
             Choose Your Scent
           </h3>
 
           <div className="flex flex-wrap gap-4">
-            {["Vanilla", "Rose"].map((scent) => (
+            {availableScents.map((scent) => (
               <button
-                key={scent}
-                onClick={() => setSelectedScent(scent)}
+                key={scent.name}
+                onClick={() => setSelectedScent(scent.name)}
                 className={`rounded-md border px-8 py-3 transition ${
-                  selectedScent === scent
+                  selectedScent === scent.name
                     ? "border-[#8B1E1E] bg-[#8B1E1E] text-white"
                     : "border-[#8B1E1E] text-[#8B1E1E] hover:bg-[#8B1E1E] hover:text-white"
                 }`}
               >
-                {scent}
+                {scent.name}
               </button>
             ))}
           </div>
         </div>
       )}
-
 
       {/* Sizes */}
       <div className="mt-10">

@@ -28,4 +28,9 @@ isGiftBag?: boolean;
     name: string;
     price: number;
   }[];
+
+  scents?: {
+    name: string;
+    description: string;
+  }[];
 }
