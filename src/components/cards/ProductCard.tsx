@@ -81,13 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </p>
 
          {isGiftBagProduct ? (
-  <div className="mt-5 flex flex-col gap-3">
-    <Link
-      href="/gift-bag"
-      className="block w-full rounded-md border border-[#8B1E1E] py-3 text-center font-medium text-[#8B1E1E] transition hover:bg-[#F8F2EA]"
-    >
-      View What's Inside
-    </Link>
+ 
 
     <Link
       href="/gift-bag"
@@ -95,7 +89,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       View Details
     </Link>
-  </div>
+  
 ) : (
   <Link
     href={productHref}
