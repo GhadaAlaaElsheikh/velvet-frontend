@@ -80,21 +80,30 @@ export default function ProductCard({ product }: ProductCardProps) {
           {displayPrice} LE
         </p>
 
-        {isGiftBagProduct ? (
-          <Link
-            href="/gift-bag"
-            className="mt-5 inline-flex rounded-md border-2 border-[#8B1E1E] bg-[#F8F2EA] px-6 py-3 text-left font-semibold text-[#8B1E1E] transition hover:bg-[#8B1E1E] hover:text-white"
-          >
-            Customize Your Gift Bag
-          </Link>
-        ) : (
-          <Link
-            href={productHref}
-            className="mt-5 block w-full rounded-md bg-[#8B1E1E] py-3 text-center font-medium text-white transition hover:bg-[#6F1515]"
-          >
-            View Details
-          </Link>
-        )}
+         {isGiftBagProduct ? (
+  <div className="mt-5 flex flex-col gap-3">
+    <Link
+      href="/gift-bag"
+      className="block w-full rounded-md border border-[#8B1E1E] py-3 text-center font-medium text-[#8B1E1E] transition hover:bg-[#F8F2EA]"
+    >
+      View What's Inside
+    </Link>
+
+    <Link
+      href="/gift-bag"
+      className="block w-full rounded-md bg-[#8B1E1E] py-3 text-center font-medium text-white transition hover:bg-[#6F1515]"
+    >
+      View Details
+    </Link>
+  </div>
+) : (
+  <Link
+    href={productHref}
+    className="mt-5 block w-full rounded-md bg-[#8B1E1E] py-3 text-center font-medium text-white transition hover:bg-[#6F1515]"
+  >
+    View Details
+  </Link>
+)}
 
       </div>
     </div>
