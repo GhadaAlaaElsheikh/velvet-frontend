@@ -71,9 +71,9 @@ export default function PaymentSummary() {
         items: cart.map((item) => ({
           product: item.product._id,
           quantity: item.quantity,
-          size: item.size,
-            ...(item.scent && { scent: item.scent }),
-        })),
+           price: Number(item.price),
+    ...(item.scent && { scent: item.scent }),
+         })),
       };
 
       console.log("ORDER DATA:", orderData);
