@@ -65,16 +65,25 @@ export default function PaymentSummary() {
 
       // Create order data
       // Backend calculates all prices securely
-      const orderData = {
-        ...customerData,
+    const orderData = {
+  ...customerData,
 
-        items: cart.map((item) => ({
-          product: item.product._id,
-          quantity: item.quantity,
-           price: Number(item.price),
+  items: cart.map((item) => ({
+    product: item.product._id,
+    quantity: item.quantity,
+    size: item.size,
+    price: Number(item.price),
     ...(item.scent && { scent: item.scent }),
-         })),
-      };
+    ...(item.giftBagSelections && {
+      giftBagSelections: item.giftBagSelections.map((selection) => ({
+        product: selection.product._id,
+        size: selection.size,
+        type: selection.type,
+        ...(selection.scent && { scent: selection.scent }),
+      })),
+    }),
+  })),
+};
 
       console.log("ORDER DATA:", orderData);
 

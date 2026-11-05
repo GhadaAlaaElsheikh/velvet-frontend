@@ -43,10 +43,19 @@ const isGiftBag =
 
   const originalPrice = selectedSize.price;
 
-  const finalPrice = isGiftBag
-    ? 300
-    : Number((originalPrice * 0.8).toFixed(2));
+let discountRate = 0;
 
+if (["perfumes", "luxury perfumes"].includes(category || "")) {
+  discountRate = 0.20;
+} else if (["bukhoor", "bakhoor"].includes(category || "")) {
+  discountRate = 0.20;
+} else if (["candles", "candle"].includes(category || "")) {
+  discountRate = 0.30;
+}
+
+const finalPrice = isGiftBag
+  ? 300
+  : Number((originalPrice * (1 - discountRate)).toFixed(2));
   const handleAddToCart = () => {
     if (isGiftBag) {
         router.push("/gift-bag");
@@ -56,6 +65,7 @@ const isGiftBag =
       product,
       selectedSize.name,
       selectedSize.price,
+      finalPrice,
       quantity,
       selectedScentData?.name
     );
