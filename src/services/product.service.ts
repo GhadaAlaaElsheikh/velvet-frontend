@@ -1,5 +1,6 @@
-const API_URL =  process.env.NEXT_PUBLIC_API_URL ||
-  "http://localhost:3001";
+
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export async function getProducts() {
   const url = `${API_URL}/products?page=1&limit=100`;
@@ -8,7 +9,6 @@ export async function getProducts() {
 
   try {
     const res = await fetch(url, {
-      //cache: "no-store",
       next: { revalidate: 60 },
     });
 
@@ -22,28 +22,27 @@ export async function getProducts() {
 
     console.log("🟢 PRODUCTS COUNT:", data.products?.length);
 
-    return{
+    return {
       ...data,
-    products: data.products.map((product: any) => ({
-      _id: product._id,
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      rating: product.rating,
-      images: product.images,
-      detailsImage:
-        product.detailsImage || product.images?.[0] || "",
-      category: product.category?.name || "",
-      gender: product.gender,
-      badge: product.badge,
-      stock: product.stock,
-      reviews: product.reviews || 0,
-      burnType: product.burnType || "",
-      sizes: product.sizes || [],
-      scents: product.scents || [],
-isGiftBag: product.isGiftBag || false,
-    }))
-  }
+      products: data.products.map((product: any) => ({
+        _id: product._id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        rating: product.rating,
+        images: product.images,
+        detailsImage:
+          product.detailsImage || product.images?.[0] || "",
+        category: product.category?.name || "",
+        gender: product.gender,
+        badge: product.badge,
+        stock: product.stock,
+        reviews: product.reviews || 0,
+        burnType: product.burnType || "",
+        sizes: product.sizes || [],
+        scents: product.scents || [],
+      })),
+    };
   } catch (error) {
     console.error("❌ GET PRODUCTS ERROR:", error);
     throw error;
@@ -52,7 +51,6 @@ isGiftBag: product.isGiftBag || false,
 
 export async function getProductById(id: string) {
   const res = await fetch(`${API_URL}/products/${id}`, {
-    //cache: "no-store",
     next: { revalidate: 60 },
   });
 
@@ -79,6 +77,5 @@ export async function getProductById(id: string) {
     burnType: product.burnType || "",
     sizes: product.sizes || [],
     scents: product.scents || [],
-isGiftBag: product.isGiftBag || false,
   };
 }

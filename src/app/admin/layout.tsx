@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AdminLayout({
   children,
@@ -10,27 +10,31 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
+    // Allow the admin login page without authentication
+    if (pathname === "/admin/login") {
+      setChecking(false);
+      return;
+    }
+
     const token = localStorage.getItem("accessToken");
     const role = localStorage.getItem("role");
 
-    // Not logged in
     if (!token) {
-      router.replace("/auth");
+      router.replace("/admin/login");
       return;
     }
 
-    // Logged in but not admin
     if (role !== "admin") {
-      router.replace("/");
+      router.replace("/admin/login");
       return;
     }
 
-    // Admin
     setChecking(false);
-  }, [router]);
+  }, [router, pathname]);
 
   if (checking) {
     return (
@@ -44,4 +48,3 @@ export default function AdminLayout({
 
   return <>{children}</>;
 }
-

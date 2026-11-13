@@ -21,59 +21,34 @@ export default function LoginForm() {
       setError("");
 
       const res = await fetch(
-  "https://velvet-backend-production-efda.up.railway.app/auth/login",
+        "https://velvet-backend-production-efda.up.railway.app/auth/login",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(form),
-        },
+        }
       );
 
       const data = await res.json();
-
-      console.log("LOGIN RESPONSE:", data);
 
       if (!res.ok) {
         setError(data.message || "Login failed");
         return;
       }
 
-      // Save access token
-      localStorage.setItem(
-        "accessToken",
-        data.accessToken,
-      );
-
-      // Save user ID
-      localStorage.setItem(
-        "userId",
-        data.user.id,
-      );
-
-      // Save user role
-      localStorage.setItem(
-        "role",
-        data.user.role,
-      );
-
-      console.log(
-        "USER ID SAVED:",
-        data.user.id,
-      );
-
-      console.log(
-        "USER ROLE:",
-        data.user.role,
-      );
-
-      // Redirect based on role
-      if (data.user.role === "admin") {
-        router.push("/admin");
-      } else {
-        router.push("/");
+      // Allow admin accounts only
+      if (data.user.role !== "admin") {
+        setError("Access denied. Admin account only.");
+        return;
       }
+
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("userId", data.user.id);
+      localStorage.setItem("role", data.user.role);
+
+      router.push("/admin");
     } catch (error) {
       console.error("LOGIN ERROR:", error);
       setError("Something went wrong");
@@ -84,7 +59,6 @@ export default function LoginForm() {
 
   return (
     <>
-      {/* Email */}
       <div>
         <label className="mb-2 block text-sm font-medium">
           Email
@@ -104,7 +78,6 @@ export default function LoginForm() {
         />
       </div>
 
-      {/* Password */}
       <div className="mt-5">
         <label className="mb-2 block text-sm font-medium">
           Password
@@ -124,24 +97,12 @@ export default function LoginForm() {
         />
       </div>
 
-      {/* Forgot Password */}
-      <div className="mt-3 text-right">
-        <button
-          type="button"
-          className="text-sm text-[#8B1E1E] hover:underline"
-        >
-          Forgot Password?
-        </button>
-      </div>
-
-      {/* Error */}
       {error && (
         <p className="mt-4 text-sm text-red-500">
           {error}
         </p>
       )}
 
-      {/* Sign In */}
       <button
         type="button"
         onClick={handleLogin}
@@ -150,30 +111,6 @@ export default function LoginForm() {
       >
         {loading ? "Signing In..." : "Sign In"}
       </button>
-
-      {/* OR */}
-      <div className="my-6 flex items-center">
-        <div className="h-px flex-1 bg-gray-300" />
-
-        <span className="mx-4 text-sm text-gray-400">
-          OR
-        </span>
-
-        <div className="h-px flex-1 bg-gray-300" />
-      </div>
-
-      {/* Google */}
-      <button
-        type="button"
-        onClick={() => {
-        window.location.href =
-  "https://velvet-backend-production-efda.up.railway.app/auth/google";
-        }}
-        className="flex w-full items-center justify-center gap-3 rounded-xl border border-gray-300 py-3 transition hover:bg-gray-50"
-      >
-        Continue with Google
-      </button>
     </>
   );
 }
-
