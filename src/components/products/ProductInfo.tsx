@@ -1,11 +1,10 @@
- 
+
 "use client";
 
 import { useState } from "react";
 import { Product } from "@/types/product";
 import { useCart } from "@/context/CartContext";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 type Props = {
   product: Product;
@@ -22,17 +21,6 @@ export default function ProductInfo({ product }: Props) {
   );
 
   const { addToCart } = useCart();
-  const router = useRouter();
-  const category = product.category?.trim().toLowerCase();
-
-  const isBundleEligible =
-    ["perfumes", "luxury perfumes"].includes(category || "") &&
-    selectedSize.name.replace(/\s/g, "").toLowerCase() === "60ml" &&
-    !product.isGiftBag;
-
-const isGiftBag =
-  product.isGiftBag === true ||
-  product.name?.trim().toLowerCase() === "velvet gift bag";
 
   const selectedScentData =
     availableScents.find((scent) => scent.name === selectedScent) ||
@@ -41,31 +29,11 @@ const isGiftBag =
   const displayedDescription =
     selectedScentData?.description || product.description;
 
-  const originalPrice = selectedSize.price;
-
-let discountRate = 0;
-
-if (["perfumes", "luxury perfumes"].includes(category || "")) {
-  discountRate = 0.20;
-} else if (["bukhoor", "bakhoor"].includes(category || "")) {
-  discountRate = 0.20;
-} else if (["candles", "candle"].includes(category || "")) {
-  discountRate = 0.30;
-}
-
-const finalPrice = isGiftBag
-  ? 300
-  : Number((originalPrice * (1 - discountRate)).toFixed(2));
   const handleAddToCart = () => {
-    if (isGiftBag) {
-        router.push("/gift-bag");
-    return;
-    }
     addToCart(
       product,
       selectedSize.name,
       selectedSize.price,
-      finalPrice,
       quantity,
       selectedScentData?.name
     );
@@ -154,38 +122,9 @@ const finalPrice = isGiftBag
           Price
         </h3>
 
-        {isGiftBag ? (
-          <div className="mt-2">
-            <p className="text-4xl font-bold text-[#8B1E1E]">
-              300 LE
-            </p>
-
-            <p className="mt-2 text-sm text-gray-600">
-              Special Gift Bag offer
-            </p>
-          </div>
-        ) : (
-          <div className="mt-2">
-            <p className="text-lg text-gray-400 line-through">
-              {originalPrice} LE
-            </p>
-
-            <p className="text-4xl font-bold text-[#8B1E1E]">
-              {finalPrice} LE
-            </p>
-
-            <p className="mt-2 text-sm font-medium text-green-700">
-              20% OFF
-            </p>
-
-            {isBundleEligible && (
-              <p className="mt-3 rounded-md bg-[#F8F2EA] p-3 text-sm font-medium text-[#8B1E1E]">
-                Buy 5 eligible 60ml perfumes for 1000 LE
-                (200 LE each).
-              </p>
-            )}
-          </div>
-        )}
+        <p className="mt-2 text-4xl font-bold text-[#8B1E1E]">
+          {selectedSize.price} LE
+        </p>
       </div>
 
       {/* Quantity */}
@@ -220,19 +159,13 @@ const finalPrice = isGiftBag
       </div>
 
       {/* Add To Cart */}
-     
       <button
-  type="button"
-  onClick={handleAddToCart}
-  className={`mt-10 w-full rounded-xl border-2 py-4 text-lg font-bold shadow-md transition-all duration-300 hover:scale-[1.02] ${
-    isGiftBag
-      ? "border-[#D8B46A] bg-[#F8F2EA] text-[#8B1E1E] hover:bg-[#D8B46A]"
-      : "border-[#8B1E1E] bg-[#8B1E1E] text-white hover:bg-[#6F1717]"
-  }`}
->
-  {isGiftBag ? "Customize Your Gift Bag" : "Add To Cart"}
-</button>
-
+        type="button"
+        onClick={handleAddToCart}
+        className="mt-10 w-full rounded-xl border-2 border-[#8B1E1E] bg-[#8B1E1E] py-4 text-lg font-bold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:bg-[#6F1717]"
+      >
+        Add To Cart
+      </button>
     </div>
   );
 }

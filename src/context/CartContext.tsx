@@ -7,14 +7,8 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { Product } from "@/types/product";
 
-export type GiftBagSelection = {
-  product: Product;
-  type: "bakhoor" | "candle" | "perfume";
-  size: string;
-  scent?: string;
-};
+import { Product } from "@/types/product";
 
 export type CartItem = {
   product: Product;
@@ -22,7 +16,6 @@ export type CartItem = {
   quantity: number;
   price: number;
   scent?: string;
-  giftBagSelections?: GiftBagSelection[];
 };
 
 type CartContextType = {
@@ -33,8 +26,7 @@ type CartContextType = {
     size: string,
     price: number,
     quantity: number,
-    scent?: string,
-    giftBagSelections?: GiftBagSelection[]
+    scent?: string
   ) => void;
 
   removeFromCart: (index: number) => void;
@@ -57,26 +49,21 @@ export function CartProvider({
     size: string,
     price: number,
     quantity: number,
-    scent?: string,
-    giftBagSelections?: GiftBagSelection[]
+    scent?: string
   ) => {
     setCart((prev) => {
       const existingItem = prev.find(
         (item) =>
           item.product._id === product._id &&
           item.size === size &&
-          item.scent === scent &&
-          JSON.stringify(item.giftBagSelections || []) ===
-            JSON.stringify(giftBagSelections || [])
+          item.scent === scent
       );
 
       if (existingItem) {
         return prev.map((item) =>
           item.product._id === product._id &&
           item.size === size &&
-          item.scent === scent &&
-          JSON.stringify(item.giftBagSelections || []) ===
-            JSON.stringify(giftBagSelections || [])
+          item.scent === scent
             ? {
                 ...item,
                 quantity: item.quantity + quantity,
@@ -93,7 +80,6 @@ export function CartProvider({
           quantity,
           price,
           scent,
-          giftBagSelections,
         },
       ];
     });
@@ -119,7 +105,8 @@ export function CartProvider({
         i === index
           ? {
               ...item,
-              quantity: item.quantity > 1 ? item.quantity - 1 : 1,
+              quantity:
+                item.quantity > 1 ? item.quantity - 1 : 1,
             }
           : item
       )

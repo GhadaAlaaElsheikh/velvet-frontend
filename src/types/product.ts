@@ -1,3 +1,4 @@
+
 export interface Product {
   _id: string;
   id?: string;
@@ -5,24 +6,22 @@ export interface Product {
   name: string;
   price: number;
   rating: number;
-    
+
   images: string[];
   detailsImage?: string;
-shippingPrice?: number;
+
+  shippingPrice?: number;
   category: string;
 
   gender?: "women" | "men" | "unisex";
 
   burnType?: string;
 
-  badge?: string;
-
   reviews?: number;
 
   description: string;
 
   stock?: number;
-isGiftBag?: boolean;
 
   sizes: {
     name: string;

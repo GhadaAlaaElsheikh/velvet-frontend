@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { calculateCartPricing } from "@/utils/pricing";
 import { toast } from "sonner";
-import BackButton from "./../../components/ui/BackButton";
+import BackButton from "@/components/ui/BackButton";
 
 export default function CartPage() {
   const {
@@ -23,7 +24,9 @@ export default function CartPage() {
     removeFromCart(index);
 
     toast.error(`${item.product.name} removed from cart`, {
-      description:`${item.size}${item.scent ? ` • ${item.scent}` : ""}`,
+      description: `${item.size}${
+        item.scent ? ` • ${item.scent}` : ""
+      }`,
     });
   };
 
@@ -56,12 +59,6 @@ export default function CartPage() {
               {cart.map((item, index) => {
                 const pricedItem = pricing.items[index];
 
-                const originalLineTotal =
-                  item.price * item.quantity;
-
-                const hasDiscount =
-                  pricedItem.lineTotal < originalLineTotal;
-
                 return (
                   <div
                     key={`${item.product._id}-${item.size}-${item.scent || "default"}`}
@@ -85,31 +82,24 @@ export default function CartPage() {
                         {item.product.name}
                       </h2>
 
-{item.scent && (
-  <p className="mt-2 text-sm font-medium text-[#8B1E1E]">
-    Scent: {item.scent}
-  </p>
-)}
+                      {item.scent && (
+                        <p className="mt-2 text-sm font-medium text-[#8B1E1E]">
+                          Scent: {item.scent}
+                        </p>
+                      )}
+
                       <p className="mt-2 text-gray-600">
                         Size: {item.size}
                       </p>
 
                       <p className="mt-2 text-gray-500">
-                        Original price: {item.price} LE
+                        Price: {item.price} LE
                       </p>
-
-                      {hasDiscount && (
-                        <p className="mt-1 font-semibold text-green-700">
-                          Offer price: {pricedItem.finalPrice} LE
-                          <span className="ml-2 text-sm font-normal">
-                            per item on average
-                          </span>
-                        </p>
-                      )}
 
                       {/* Quantity */}
                       <div className="mt-4 flex w-fit items-center overflow-hidden rounded-md border">
                         <button
+                          type="button"
                           onClick={() => decreaseQuantity(index)}
                           className="px-4 py-2 text-xl transition hover:bg-gray-100"
                         >
@@ -121,6 +111,7 @@ export default function CartPage() {
                         </span>
 
                         <button
+                          type="button"
                           onClick={() => increaseQuantity(index)}
                           className="px-4 py-2 text-xl transition hover:bg-gray-100"
                         >
@@ -131,19 +122,12 @@ export default function CartPage() {
 
                     {/* Price + Remove */}
                     <div className="flex flex-row items-center justify-between gap-5 sm:flex-col sm:items-end">
-                      <div className="text-right">
-                        {hasDiscount && (
-                          <p className="text-sm text-gray-400 line-through">
-                            {originalLineTotal.toFixed(2)} LE
-                          </p>
-                        )}
-
-                        <p className="text-2xl font-bold text-[#8B1E1E]">
-                          {pricedItem.lineTotal.toFixed(2)} LE
-                        </p>
-                      </div>
+                      <p className="text-2xl font-bold text-[#8B1E1E]">
+                        {pricedItem.lineTotal.toFixed(2)} LE
+                      </p>
 
                       <button
+                        type="button"
                         onClick={() => handleRemove(index)}
                         className="rounded-md bg-red-600 px-4 py-2 text-white transition hover:bg-red-700"
                       >
@@ -163,27 +147,7 @@ export default function CartPage() {
 
               <div className="flex items-center justify-between border-b pb-4">
                 <span className="text-gray-600">
-                  Original Subtotal
-                </span>
-
-                <span className="font-semibold">
-                  {pricing.originalSubtotal.toFixed(2)} LE
-                </span>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-gray-600">
-                  Your Savings
-                </span>
-
-                <span className="font-semibold text-green-700">
-                  - {pricing.savings.toFixed(2)} LE
-                </span>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-b pb-4">
-                <span className="text-gray-600">
-                  Subtotal after discounts
+                  Subtotal
                 </span>
 
                 <span className="font-semibold">
@@ -191,7 +155,7 @@ export default function CartPage() {
                 </span>
               </div>
 
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex items-center justify-between border-b pb-4">
                 <span className="text-gray-600">
                   Shipping
                 </span>

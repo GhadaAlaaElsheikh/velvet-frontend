@@ -1,10 +1,11 @@
+ 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ProductCard from "@/components/cards/ProductCard";
 import { getProducts } from "@/services/product.service";
 import { Product } from "@/types/product";
-import BackButton from './../../components/ui/BackButton';
- 
+import BackButton from "@/components/ui/BackButton";
+
 type ShopPageProps = {
   searchParams: Promise<{
     category?: string;
@@ -17,25 +18,19 @@ export default async function ShopPage({
   const { category } = await searchParams;
 
   const data = await getProducts();
-/*
-  const products: Product[] = data?.products ?? [];
-const filteredProducts = category
-  ? products.filter(
-      (product: Product) => product.category === category
-    )
-  : products;
-*/
-const products: Product[] = data?.products ?? [];
 
-const availableProducts = products.filter(
-  (product: Product) => !product.isGiftBag
-);
+  const products: Product[] = Array.isArray(data)
+    ? data
+    : Array.isArray(data?.products)
+      ? data.products
+      : [];
 
-const filteredProducts = category
-  ? availableProducts.filter(
-      (product: Product) => product.category === category
-    )
-  : availableProducts;
+  const filteredProducts = category
+    ? products.filter(
+        (product) => product.category === category
+      )
+    : products;
+
   return (
     <>
       <Navbar />
@@ -62,17 +57,12 @@ const filteredProducts = category
                 </p>
               ) : (
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-             {filteredProducts.map((product: Product) => (
-
-<ProductCard
-
- key={product._id}
-
- product={product}
-
-   />
-
- ))}
+                  {filteredProducts.map((product) => (
+                    <ProductCard
+                      key={product._id}
+                      product={product}
+                    />
+                  ))}
                 </div>
               )}
             </div>

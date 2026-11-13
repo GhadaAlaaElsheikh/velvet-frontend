@@ -17,37 +17,20 @@ export default function ProductCard({ product }: ProductCardProps) {
     name,
     images,
     price,
-    badge,
-    isGiftBag,
   } = product;
 
-  const isGiftBagProduct =
-    isGiftBag === true ||
-    name?.trim().toLowerCase() === "velvet gift bag";
-
-  const productHref = isGiftBagProduct
-    ? "/gift-bag"
-    : `/products/${_id}`;
+  const productHref = `/products/${_id}`;
 
   const image =
     Array.isArray(images) && typeof images[0] === "string"
       ? images[0]
       : null;
 
-  const displayPrice = isGiftBagProduct ? 300 : price;
-
   return (
     <div className="group overflow-hidden rounded-lg bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
 
       {/* Product Image */}
       <div className="relative h-[420px] overflow-hidden">
-
-        {!isGiftBagProduct && badge && (
-          <span className="absolute left-4 top-4 z-10 rounded-full bg-[#8B1E1E] px-3 py-1 text-sm font-medium text-white">
-            {badge}
-          </span>
-        )}
-
         <Link href={productHref} className="block h-full w-full">
           {image ? (
             <Image
@@ -69,7 +52,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {/* Product Info */}
       <div className="p-5">
-
         <h3 className="mb-2 text-xl font-semibold text-[#8B1E1E]">
           <Link href={productHref}>
             {name}
@@ -77,28 +59,15 @@ export default function ProductCard({ product }: ProductCardProps) {
         </h3>
 
         <p className="mt-2 text-lg font-medium">
-          {displayPrice} LE
+          {price} LE
         </p>
 
-         {isGiftBagProduct ? (
- 
-
-    <Link
-      href="/gift-bag"
-      className="block w-full rounded-md bg-[#8B1E1E] py-3 text-center font-medium text-white transition hover:bg-[#6F1515]"
-    >
-      View Details
-    </Link>
-  
-) : (
-  <Link
-    href={productHref}
-    className="mt-5 block w-full rounded-md bg-[#8B1E1E] py-3 text-center font-medium text-white transition hover:bg-[#6F1515]"
-  >
-    View Details
-  </Link>
-)}
-
+        <Link
+          href={productHref}
+          className="mt-5 block w-full rounded-md bg-[#8B1E1E] py-3 text-center font-medium text-white transition hover:bg-[#6F1515]"
+        >
+          View Details
+        </Link>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useCart } from "@/context/CartContext";
@@ -12,7 +13,6 @@ export default function PaymentSummary() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Calculate offers and final prices
   const pricing = calculateCartPricing(cart);
 
   const handleOrder = async () => {
@@ -22,87 +22,57 @@ export default function PaymentSummary() {
       setLoading(true);
       setError("");
 
-      // Check login
-      const token = localStorage.getItem("accessToken");
-
-      if (!token) {
-        router.push("/auth");
-        return;
-      }
-
-      // Check cart
       if (cart.length === 0) {
         setError("Your cart is empty.");
         return;
       }
 
-      // Get checkout information
       const checkoutDataString =
         localStorage.getItem("checkoutData");
 
       if (!checkoutDataString) {
-        setError(
-          "Please complete your checkout information first."
-        );
+        setError("Please complete your checkout information first.");
         router.push("/checkout");
         return;
       }
 
       const customerData = JSON.parse(checkoutDataString);
 
-      // Make sure all checkout fields are filled
       const isEmpty = Object.values(customerData).some(
-        (value) => !String(value).trim()
+        (value) => !String(value ?? "").trim()
       );
 
       if (isEmpty) {
-        setError(
-          "Please complete all checkout information."
-        );
+        setError("Please complete all checkout information.");
         router.push("/checkout");
         return;
       }
 
       // Create order data
-      // Backend calculates all prices securely
-    const orderData = {
-  ...customerData,
+      const orderData = {
+        ...customerData,
 
-  items: cart.map((item) => ({
-    product: item.product._id,
-    quantity: item.quantity,
-    size: item.size,
-    price: Number(item.price),
-    ...(item.scent && { scent: item.scent }),
-    ...(item.giftBagSelections && {
-      giftBagSelections: item.giftBagSelections.map((selection) => ({
-        product: selection.product._id,
-        size: selection.size,
-        type: selection.type,
-        ...(selection.scent && { scent: selection.scent }),
-      })),
-    }),
-  })),
-};
+        items: cart.map((item) => ({
+          product: item.product._id,
+          quantity: item.quantity,
+          size: item.size,
+          ...(item.scent && { scent: item.scent }),
+        })),
+      };
 
-      console.log("ORDER DATA:", orderData);
-
-      // Send order to backend
+      // Send order to backend without login
       const res = await fetch(
         "https://velvet-backend-production-efda.up.railway.app/orders",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(orderData),
         }
       );
 
       const data = await res.json();
-
-      console.log("ORDER RESPONSE:", data);
 
       if (!res.ok) {
         setError(
@@ -112,8 +82,6 @@ export default function PaymentSummary() {
         );
         return;
       }
-
-      console.log("ORDER CREATED:", data);
 
       // Clear cart
       clearCart();
@@ -134,29 +102,13 @@ export default function PaymentSummary() {
   return (
     <div>
       <h2 className="mb-8 text-3xl font-semibold text-[#8B1E1E]">
-        Payment Summary
+        Order Summary
       </h2>
 
       <div className="space-y-4">
         <div className="flex justify-between">
-          <span>Original Subtotal</span>
-          <span>
-            {pricing.originalSubtotal.toFixed(2)} LE
-          </span>
-        </div>
-
-        <div className="flex justify-between">
-          <span>Your Savings</span>
-          <span className="font-semibold text-green-700">
-            - {pricing.savings.toFixed(2)} LE
-          </span>
-        </div>
-
-        <div className="flex justify-between">
-          <span>Subtotal after discounts</span>
-          <span>
-            {pricing.subtotal.toFixed(2)} LE
-          </span>
+          <span>Subtotal</span>
+          <span>{pricing.subtotal.toFixed(2)} LE</span>
         </div>
 
         <div className="flex justify-between">
@@ -186,7 +138,7 @@ export default function PaymentSummary() {
         disabled={loading || cart.length === 0}
         className="mt-8 w-full rounded-lg bg-[#8B1E1E] py-4 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {loading ? "Placing Order..." : "Place Order"}
+        {loading ? "Placing Order..." : "Confirm Order"}
       </button>
     </div>
   );

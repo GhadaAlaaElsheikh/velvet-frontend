@@ -1,9 +1,20 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
 
+export type CheckoutData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  country: string;
+  city: string;
+  address: string;
+};
+
 export default function CheckoutForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<CheckoutData>({
     firstName: "",
     lastName: "",
     email: "",
@@ -17,7 +28,11 @@ export default function CheckoutForm() {
     const savedData = localStorage.getItem("checkoutData");
 
     if (savedData) {
-      setFormData(JSON.parse(savedData));
+      try {
+        setFormData(JSON.parse(savedData));
+      } catch {
+        localStorage.removeItem("checkoutData");
+      }
     }
   }, []);
 
@@ -40,13 +55,14 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form>
+    <form onSubmit={(e) => e.preventDefault()}>
       <h2 className="text-3xl font-semibold text-[#8B1E1E]">
         Contact Information
       </h2>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         <input
+          required
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
@@ -55,6 +71,7 @@ export default function CheckoutForm() {
         />
 
         <input
+          required
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
@@ -64,6 +81,7 @@ export default function CheckoutForm() {
       </div>
 
       <input
+        required
         name="email"
         type="email"
         value={formData.email}
@@ -73,7 +91,9 @@ export default function CheckoutForm() {
       />
 
       <input
+        required
         name="phone"
+        type="tel"
         value={formData.phone}
         onChange={handleChange}
         placeholder="Phone"
@@ -85,6 +105,7 @@ export default function CheckoutForm() {
       </h2>
 
       <input
+        required
         name="country"
         value={formData.country}
         onChange={handleChange}
@@ -93,6 +114,7 @@ export default function CheckoutForm() {
       />
 
       <input
+        required
         name="city"
         value={formData.city}
         onChange={handleChange}
@@ -101,6 +123,7 @@ export default function CheckoutForm() {
       />
 
       <input
+        required
         name="address"
         value={formData.address}
         onChange={handleChange}
