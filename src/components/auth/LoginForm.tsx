@@ -21,7 +21,7 @@ export default function LoginForm() {
       setError("");
 
       const res = await fetch(
-        "https://velvet-backend-production-efda.up.railway.app/auth/login",
+        "https://velvet-backend-production-7df547eb.up.railway.app/auth/login",
         {
           method: "POST",
           headers: {

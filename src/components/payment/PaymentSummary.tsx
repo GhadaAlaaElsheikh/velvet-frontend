@@ -62,7 +62,7 @@ export default function PaymentSummary() {
 
       // Send order to backend without login
       const res = await fetch(
-        "https://velvet-backend-production-efda.up.railway.app/orders",
+        "https://velvet-backend-production-7df547eb.up.railway.app/orders",
         {
           method: "POST",
           headers: {
